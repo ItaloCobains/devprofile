@@ -8,6 +8,7 @@ import {
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
 import * as SplashScreen from 'expo-splash-screen';
+import { Signin } from './src/pages/Signin';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,7 +24,7 @@ const App: React.FunctionComponent = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Home />
+      <Signin />
     </ThemeProvider>
   );
 };
