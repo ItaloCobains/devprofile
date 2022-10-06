@@ -1,0 +1,14 @@
+.docker/dbdata
+.idea/
+.vscode/
+node_modules/
+build/
+temp/*
+!temp/.gitkeep
+.env
+coverage
+dist/
+uploads/*
+!uploads/.gitkeep
+.DS_Store
+db.sqlite
