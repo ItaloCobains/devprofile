@@ -1,27 +1,26 @@
 import React from 'react';
-import { ScrollView, KeyboardAvoidingView, Platform, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { Button } from '../../components/Form/Button';
 import { Input } from '../../components/Form/Input';
 import {
+  BackToSignIn,
+  BackToSignInTitle,
   Container,
   Content,
-  CreateAccount,
-  CreateAccountTitle,
-  ForgotPasswordButton,
-  ForgotPasswordTitle,
   Icon,
   Logo,
   Title,
 } from './styles';
+
 import logo from '../../assets/logo.png';
 import { useNavigation } from '@react-navigation/native';
 
 interface ScreenNavigationProp {
-  navigate: (screen: string) => void;
+  goBack: () => void;
 }
 
-export const Signin: React.FunctionComponent = () => {
-  const { navigate } = useNavigation<ScreenNavigationProp>();
+export const Signup: React.FunctionComponent = () => {
+  const { goBack } = useNavigation<ScreenNavigationProp>();
 
   return (
     <KeyboardAvoidingView
@@ -37,27 +36,21 @@ export const Signin: React.FunctionComponent = () => {
           <Content>
             <Logo source={logo} />
             <View>
-              <Title>Faça seu login</Title>
+              <Title>Crie sua conta</Title>
             </View>
+
+            <Input placeholder="Nome Completo" />
             <Input placeholder="Email" />
             <Input placeholder="Senha" />
 
-            <Button title="Entrar" />
-
-            <ForgotPasswordButton>
-              <ForgotPasswordTitle>Esqueci minha senha</ForgotPasswordTitle>
-            </ForgotPasswordButton>
+            <Button title="Criar conta" />
           </Content>
         </Container>
       </ScrollView>
-      <CreateAccount
-        onPress={() => {
-          navigate('SignUp');
-        }}
-      >
-        <Icon name="log-in" />
-        <CreateAccountTitle>Criar um conta</CreateAccountTitle>
-      </CreateAccount>
+      <BackToSignIn onPress={() => goBack()}>
+        <Icon name="arrow-left" />
+        <BackToSignInTitle>Voltar para login</BackToSignInTitle>
+      </BackToSignIn>
     </KeyboardAvoidingView>
   );
 };

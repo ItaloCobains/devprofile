@@ -1,14 +1,14 @@
 import React from 'react';
-import { Home } from './src/pages/Home';
 import { ThemeProvider } from 'styled-components';
 import theme from './src/global/styles/theme';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   useFonts,
   Roboto_400Regular,
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
 import * as SplashScreen from 'expo-splash-screen';
-import { Signin } from './src/pages/Signin';
+import { Routes } from './src/routes';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,9 +23,11 @@ const App: React.FunctionComponent = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <Signin />
-    </ThemeProvider>
+    <NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <Routes />
+      </ThemeProvider>
+    </NavigationContainer>
   );
 };
 

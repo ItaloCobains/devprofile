@@ -28,22 +28,12 @@ export const Logo = styled.Image`
   margin-bottom: ${RFValue(64)}px;
 `;
 
-export const ForgotPasswordButton = styled.TouchableOpacity`
-  margin-top: 24px;
-`;
-
-export const ForgotPasswordTitle = styled.Text`
-  font-size: ${RFValue(14)}px;
-  font-family: ${({ theme }) => theme.fonts.regular};
-  color: ${({ theme }) => theme.colors.gray500};
-`;
-
 export const Icon = styled(Feather)`
   font-size: ${RFValue(20)}px;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-export const CreateAccount = styled.TouchableOpacity`
+export const BackToSignIn = styled.TouchableOpacity`
   position: absolute;
   left: 0;
   right: 0;
@@ -57,7 +47,7 @@ export const CreateAccount = styled.TouchableOpacity`
   flex-direction: row;
 `;
 
-export const CreateAccountTitle = styled.Text`
+export const BackToSignInTitle = styled.Text`
   font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme }) => theme.colors.primary};
