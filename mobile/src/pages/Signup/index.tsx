@@ -1,5 +1,11 @@
 import React from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+} from 'react-native';
 import { useForm, FieldValues } from 'react-hook-form';
 import { Button } from '../../components/Form/Button';
 import {
@@ -18,6 +24,8 @@ import { InputControl } from '../../components/Form/InputControl';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+
+import { api } from '../../services/api';
 
 interface ScreenNavigationProp {
   goBack: () => void;
@@ -44,14 +52,25 @@ export const Signup: React.FunctionComponent = () => {
 
   const { goBack } = useNavigation<ScreenNavigationProp>();
 
-  const handleSignUp = (form: IFormInputs) => {
+  const handleSignUp = async (form: IFormInputs) => {
     const data = {
       name: form.name,
       email: form.email,
       password: form.password,
     };
 
-    console.log(data);
+    try {
+      await api.post('users', data);
+      Alert.alert(
+        'Cadastro Realizado',
+        'Você ja pode fazer login na aplicação',
+      );
+    } catch (err) {
+      Alert.alert(
+        'Erro no cadastro',
+        'Ocorreu um erro ao fazer o cadastro. Tente novamente mais tarde',
+      );
+    }
   };
 
   return (
@@ -93,7 +112,7 @@ export const Signup: React.FunctionComponent = () => {
               autoCorrect={false}
               secureTextEntry
               control={control}
-              name="password;"
+              name="password"
               placeholder="Senha"
               error={errors.password && errors.password.message}
             />
