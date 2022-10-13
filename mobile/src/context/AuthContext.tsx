@@ -17,6 +17,7 @@ interface ICredentials {
 interface IAuthContext {
   user: IUser;
   signIn(credentials: ICredentials): void;
+  signOut(): void;
 }
 
 interface Iprops {
@@ -65,9 +66,25 @@ export const AuthProvider: React.FunctionComponent<Iprops> = ({ children }) => {
     }
   };
 
+  const signOut = async () => {
+    await AsyncStorage.removeItem(tokenData);
+    await AsyncStorage.removeItem(userData);
+    setData({} as IAuthState);
+  };
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn }}>
+    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = (): IAuthContext => {
+  const context = React.useContext(AuthContext);
+
+  if (!context) {
+    throw new Error('UseAuth deve ser usado em Auth provider');
+  }
+
+  return context;
 };
