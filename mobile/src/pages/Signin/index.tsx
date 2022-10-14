@@ -114,7 +114,7 @@ export const Signin: React.FunctionComponent = () => {
               onPress={handleSubmit(handleSignIn)}
             />
 
-            <ForgotPasswordButton>
+            <ForgotPasswordButton onPress={() => navigate('ForgotPassword')}>
               <ForgotPasswordTitle>Esqueci minha senha</ForgotPasswordTitle>
             </ForgotPasswordButton>
           </Content>
