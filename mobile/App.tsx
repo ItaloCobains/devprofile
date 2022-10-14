@@ -10,6 +10,7 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 import { Routes } from './src/routes';
 import { AuthProvider } from './src/context/AuthContext';
+import { StatusBar } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,6 +26,7 @@ const App: React.FunctionComponent = () => {
 
   return (
     <NavigationContainer>
+      <StatusBar backgroundColor="transparent" translucent />
       <ThemeProvider theme={theme}>
         <AuthProvider>
           <Routes />

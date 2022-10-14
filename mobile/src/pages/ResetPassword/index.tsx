@@ -37,10 +37,14 @@ interface IFormInputs {
 }
 
 const formSchema = yup.object({
-  email: yup.string().email('Email inválido.').required('Informe o email.'),
+  token: yup.string().uuid('Código inválido.').required('Informe o código.'),
+  password: yup.string().required('Informe a nova senha.'),
+  password_confirmation: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Confirmação incorreta'),
 });
 
-export const ForgotPassword: React.FunctionComponent = () => {
+export const ResetPassword: React.FunctionComponent = () => {
   const {
     control,
     handleSubmit,
@@ -51,22 +55,24 @@ export const ForgotPassword: React.FunctionComponent = () => {
 
   const { goBack, navigate } = useNavigation<ScreenNavigationProp>();
 
-  const handleForgotPassword = async (form: IFormInputs) => {
+  const handleResetPassword = async (form: IFormInputs) => {
     const data = {
-      email: form.email,
+      token: form.token,
+      password: form.password,
+      password_confirmation: form.password_confirmation,
     };
 
     try {
-      await api.post('password/forgot', data);
+      await api.post('password/reset', data);
       Alert.alert(
-        'Email enviado',
-        'Você receberam um email com as instruções para a redefinição da senha.',
+        'Senha Redefinida',
+        'A senha foi redefinida com sucesso efetue o login para acessar',
       );
-      navigate('ResetPassword');
+      navigate('SignIn');
     } catch (err) {
       Alert.alert(
-        'Erro no envio do email',
-        'Ocorreu um erro ao enviar o email. Tente novamente',
+        'Erro ao resetar senha',
+        'Ocorreu um erro ao resetar sua senha. Tente novamente mais tarde',
       );
     }
   };
@@ -85,22 +91,43 @@ export const ForgotPassword: React.FunctionComponent = () => {
           <Content>
             <Logo source={logo} />
             <View>
-              <Title>Esqueci minha senha</Title>
+              <Title>Redefinir a senha</Title>
             </View>
 
             <InputControl
               autoCapitalize="none"
               autoCorrect={false}
-              keyboardType={'email-address'}
               control={control}
-              name="email"
-              placeholder="Email"
-              error={errors.email && errors.email.message}
+              name="token"
+              placeholder="Código"
+              error={errors.token && errors.token.message}
+            />
+            <InputControl
+              autoCapitalize="none"
+              autoCorrect={false}
+              secureTextEntry
+              control={control}
+              name="password"
+              placeholder="Senha"
+              error={errors.password && errors.password.message}
+            />
+
+            <InputControl
+              autoCapitalize="none"
+              autoCorrect={false}
+              secureTextEntry
+              control={control}
+              name="password_confirmation"
+              placeholder="Senha"
+              error={
+                errors.password_confirmation &&
+                errors.password_confirmation.message
+              }
             />
 
             <Button
-              title="Enviar"
-              onPress={handleSubmit(handleForgotPassword)}
+              title="Criar conta"
+              onPress={handleSubmit(handleResetPassword)}
             />
           </Content>
         </Container>
